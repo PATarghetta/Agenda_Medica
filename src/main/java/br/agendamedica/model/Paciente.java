@@ -3,6 +3,7 @@ package br.agendamedica.model;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -14,7 +15,8 @@ public class Paciente extends AbstractEntity {
 	private String cpf;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataN;
-	private String planoS;
+	@ManyToOne
+	private PlanoSaude planoS; 
 
 	public String getNome() {
 		return nome;
@@ -48,25 +50,20 @@ public class Paciente extends AbstractEntity {
 		this.dataN = dataN;
 	}
 
-	public String getPlanoS() {
-		return planoS;
-	}
-
-	public void setPlanoS(String planoS) {
-		this.planoS = planoS;
-	}
-
+	
 	public Paciente() {
 
 	}
 
-	public Paciente(String nome, String rg, String cpf, LocalDate dataN, String planoS) {
-		this.nome = nome;
-		this.rg = rg;
-		this.cpf = cpf;
-		this.dataN = dataN;
+	
+	public PlanoSaude getPlanoS() {
+		return planoS;
+	}
+
+	public void setPlanoS(PlanoSaude planoS) {
 		this.planoS = planoS;
 	}
+
 
 	/**
 	 * 

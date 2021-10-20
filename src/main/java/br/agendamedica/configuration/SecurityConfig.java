@@ -26,34 +26,30 @@ import br.agendamedica.security.JWTUtil;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
-    private JWTUtil jwtUtil;
-	
+	private JWTUtil jwtUtil;
+
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepo;
-	
-	private static final String[] PUBLIC_MATCHERS = { "/pacientes/**", "/agendamentos/**" };
-	
-	
 
+	private static final String[] PUBLIC_MATCHERS = { "/pacientes/**", "/PlanoSaudes/**", "/medicos/***", "/agendamentos/**" };
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil, usuarioRepo));
-		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil,	userDetailsService));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
+
 	@Override
-	protected void configure(AuthenticationManagerBuilder  
-	 auth) throws Exception {
-	     auth.userDetailsService(userDetailsService)
-	      .passwordEncoder(bCryptPasswordEncoder());
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 
 	@Bean
@@ -62,11 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
 	}
-	
+
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-	 return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder();
 	}
-	
 
 }
