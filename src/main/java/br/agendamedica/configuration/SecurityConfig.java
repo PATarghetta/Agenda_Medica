@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UsuarioRepository usuarioRepo;
 
-	private static final String[] PUBLIC_MATCHERS = { "/pacientes/**", "/PlanoSaudes/**", "/medicos/***", "/agendamentos/**" };
+	private static final String[] PUBLIC_MATCHERS = { "/pacientes/**", "/planosaudes/**", "/medicos/**", "/agendamentos/**" };
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

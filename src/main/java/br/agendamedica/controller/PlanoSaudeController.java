@@ -19,7 +19,7 @@ import br.agendamedica.model.PlanoSaude;
 import br.agendamedica.service.PlanoSaudeService;
 
 @RestController
-@RequestMapping("/PlanoSaudes")
+@RequestMapping("/planosaudes")
 public class PlanoSaudeController implements ControllerInterface<PlanoSaude> {
 
 	@Autowired
