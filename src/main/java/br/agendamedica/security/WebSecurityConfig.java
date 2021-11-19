@@ -22,6 +22,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
 	private ImplementsUserDetailsService userDetailsService;
+    
+    private static final String[] PUBLIC_MATCHERS = { "/usuarios/**", "/medicos/**", "/pacientes/**", "/planosaudes/**",
+			"/agendamentos/**", "/documentacao_agendamentos/**", "/swagger-ui/**" };
+
+	private static final String[] PUBLIC_MATCHERS_POST = { "/usuarios/**", "/medicos/**", "/pacientes/**",
+			"/planosaudes/**" };
+
+	private static final String[] PUBLIC_MATCHERS_DELETE = { "/usuarios/**", "/medicos/**", "/pacientes/**",
+			"/planosaudes/**" };
+
+	private static final String[] PUBLIC_MATCHERS_PUT = { "/usuarios/**", "/medicos/**", "/pacientes/**",
+			"/planosaudes/**" };
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
