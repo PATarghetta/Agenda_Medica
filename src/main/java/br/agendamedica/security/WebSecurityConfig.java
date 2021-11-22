@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private ImplementsUserDetailsService userDetailsService;
     
     private static final String[] PUBLIC_MATCHERS = { "/usuarios/**", "/medicos/**", "/pacientes/**", "/planosaudes/**",
-			"/agendamentos/**", "/documentacao_agendamentos/**", "/swagger-ui/**" };
+			 "/documentacao_agendamentos/**", "/swagger-ui/**" };
 
 	private static final String[] PUBLIC_MATCHERS_POST = { "/usuarios/**", "/medicos/**", "/pacientes/**",
 			"/planosaudes/**" };
