@@ -20,49 +20,51 @@ import br.agendamedica.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController implements ControllerInterface<Usuario> {
+public class UsuarioController implements ControllerInterface<Usuario>{
 
 	@Autowired
-	private UsuarioService service;
+    UsuarioService service;
 
-	@Override
-	@GetMapping
-	public ResponseEntity<List<Usuario>> getAll() {
+    @Override
+    @GetMapping
+    public ResponseEntity<List<Usuario>> getAll() {
+        return ResponseEntity.ok(service.findAll());
+    }
 
-		return ResponseEntity.ok().body(service.findAll());
-	}
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(@PathVariable("id") Long id) {
+        Usuario _Usuario = service.findById(id);
+        if(_Usuario != null) {
+            return ResponseEntity.ok(_Usuario);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 
-	@Override
-	@GetMapping("{/id}")
-	public ResponseEntity<?> get(@PathVariable Long id) {
-		return ResponseEntity.ok().body(service.findAll());
+    @Override
+    @PostMapping
+    public ResponseEntity<Usuario> post(@RequestBody Usuario obj) {
+        service.create(obj);
+        return ResponseEntity.ok(obj);
+    }
 
-	}
+    @Override
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping
+    public ResponseEntity<?> put(@RequestBody Usuario obj) {
+        if(service.update(obj)) {
+            return ResponseEntity.ok(obj);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 
-	@Override
-	@PostMapping
-	public ResponseEntity<Usuario> post(@RequestBody Usuario obj) {
-		service.create(obj);
-		return ResponseEntity.ok().body(obj);
-	}
-
-	@Override
-	@PutMapping
-	public ResponseEntity<?> put(@RequestBody Usuario obj) {
-		if (service.update(obj)) {
-			return ResponseEntity.ok(obj);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-	}
-
-	@Override
-	@DeleteMapping(value = "/{id}")
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		if (service.delete(id)) {
-			return ResponseEntity.ok().build();
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-	}
+    @Override
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        if(service.delete(id)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
