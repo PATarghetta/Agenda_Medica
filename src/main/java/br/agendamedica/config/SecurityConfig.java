@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UsuarioRepository cliRepo;
 
-	private static final String[] PUBLIC_MATCHERS = { "/usuarios/**", "/medicos/**", "/pacientes/**", "/planosaudes/**",
+	private static final String[] PUBLIC_MATCHERS = { "/usuarios/**", "/medicos/**", "/pacientes/**", "/planosaudes/**", "/agendamentos/**",
 			 "/documentacao/**", "/swagger-ui/**", "swagger-ui.html/**" };
 
 	private static final String[] PUBLIC_MATCHERS_POST = { "/usuarios/**", "/medicos/**", "/pacientes/**",
